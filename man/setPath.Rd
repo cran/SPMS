@@ -29,7 +29,7 @@ Xiaomeng Ni
 #--paths<-setPath()
 
 ## The function is currently defined as
-setPath<-function () 
+function () 
 {
     paths <- scan(what = "character")
     return(paths)

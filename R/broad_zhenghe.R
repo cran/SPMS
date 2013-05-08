@@ -197,7 +197,8 @@ function(paths,dORb,inG){
 	 unlink("txtResult.txt")
      k<-c()
      gResult1<-data.frame()
-	 k<-c(k,grep("hsa0",gR))
+	 nn<-paste0(substr(gR[1],1,(nchar(gR[1])-4)))
+	 k<-c(k,grep(nn,gR))
      if(length(k)>2){
          for(i in 1:(length(k)/2-1)){
              l<-1

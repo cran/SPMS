@@ -5,7 +5,8 @@
 To save the graphicl result in pdf format.
 }
 \description{
-Function to show the text result fo broad in picture.
+Function to save one of graph results of sub-pathway by breadth-first traversal in the pdf file.A file of .pdf format of one of sub-pathway graph results is saved in the "picture" folder under the "paths" which is set by the function of
+setPath() 
 }
 \usage{
 broad_subPathwayGraph(paths, q, pathway)
@@ -68,24 +69,25 @@ function (paths, q, pathway)
     setwd(n3)
     broad <- read.table(pathway, header = FALSE, sep = "\t", 
         na.strings = "NA", stringsAsFactors = FALSE)
-    n4 <- sub(" ", "", paste(paths, "/coords1"))
+    n4 <- sub(" ", "", paste(paths, "/coords"))
     setwd(n4)
     coords <- read.table(pathway, header = FALSE, sep = "\t", 
         na.strings = "NA", stringsAsFactors = FALSE)
-    setwd(paths)
-    size <- read.delim("ImageSize.txt", header = FALSE, na.strings = "NA", 
-        sep = "\t")
+    data(ImageSize, envir = environment())
+    ImageSize <- ImageSize
     library(png)
     library(EBImage)
     o <- sub(" ", "", paste(paths, "/picture"))
     setwd(o)
-    pdffile <- paste0(gResult[1, 1], ".pdf")
+    pdffile <- paste0(gResult[q, 1], ".pdf")
     pdf(file = pdffile, bg = "transparent")
     op <- par(bg = "thistle")
-    a <- which(name == size[, 1])
-    plot(c(0, as.numeric(as.character(size[a, 2]))), c(0, as.numeric(as.character(size[a, 
-        3]))), type = "n", xlab = "", ylab = "", axes = FALSE, 
-        ann = FALSE)
+    name1 <- substr(name, (nchar(name) - 4), nchar(name))
+    name1 <- paste0("a", name1)
+    a <- which(name1 == ImageSize[, 1])
+    plot(c(0, as.numeric(as.character(ImageSize[a, 2]))), c(0, 
+        as.numeric(as.character(ImageSize[a, 3]))), type = "n", 
+        xlab = "", ylab = "", axes = FALSE, ann = FALSE)
     p <- nchar(name)
     species <- c()
     if (p == 8) {
@@ -98,17 +100,17 @@ function (paths, q, pathway)
     setwd(p)
     name1 <- sub(" ", ".", paste(name, "png"))
     image <- readPNG(name1, native = TRUE)
-    rasterImage(image, 0, 0, as.numeric(as.character(size[a, 
-        2])), as.numeric(as.character(size[a, 3])), interpolate = FALSE)
+    rasterImage(image, 0, 0, as.numeric(as.character(ImageSize[a, 
+        2])), as.numeric(as.character(ImageSize[a, 3])), interpolate = FALSE)
     par(new = TRUE)
     for (i in gSymbol[q, 2]:gSymbol[q, 3]) {
         k <- 0
         k = which(coords[, 1] == broad1[i, gSymbol[q, 1]])
         rect((as.numeric(coords[k, 2]) - 23), abs((as.numeric(coords[k, 
-            3]) + 9) - as.numeric(as.character(size[a, 3]))), 
+            3]) + 9) - as.numeric(as.character(ImageSize[a, 3]))), 
             (as.numeric(coords[k, 2]) + 23), abs((as.numeric(coords[k, 
-                3]) - 9) - as.numeric(as.character(size[a, 3]))), 
-            border = "#FF00FF")
+                3]) - 9) - as.numeric(as.character(ImageSize[a, 
+                3]))), border = "#FF00FF")
     }
     for (i in 10:(9 + gResult[q, 4])) {
         for (j in gSymbol[q, 2]:gSymbol[q, 3]) {
@@ -118,9 +120,9 @@ function (paths, q, pathway)
                 k = which(coords[, 1] == broad1[j, gSymbol[q, 
                   1]])
                 rect((as.numeric(coords[k, 2]) - 23), abs((as.numeric(coords[k, 
-                  3]) + 9) - as.numeric(as.character(size[a, 
+                  3]) + 9) - as.numeric(as.character(ImageSize[a, 
                   3]))), (as.numeric(coords[k, 2]) + 23), abs((as.numeric(coords[k, 
-                  3]) - 9) - as.numeric(as.character(size[a, 
+                  3]) - 9) - as.numeric(as.character(ImageSize[a, 
                   3]))), border = "#FF0000")
             }
         }

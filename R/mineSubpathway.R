@@ -6,6 +6,7 @@ function(paths,interestOfGene,dORb,name,inG,p_value,broad_path){
 	 }else{
 	     num<-getNodesNum(paths)
 	 }
+	 # interestOfGene<-inputInterestGene()
 	 if(nchar(name)<5){
 	     if(dORb=="depth"){
              data<-depth_subPathwayMinner(paths,num,name,interestOfGene,p_value)

@@ -46,13 +46,13 @@ function (paths)
         dir.create("nodes")
     }
     setwd(paths)
-    if (length(which("coords1" == dir())) > 0) {
-        n <- sub(" ", "", paste(paths, "/coords1"))
+    if (length(which("coords" == dir())) > 0) {
+        n <- sub(" ", "", paste(paths, "/coords"))
         setwd(n)
         unlink(dir())
     }
     else {
-        dir.create("coords1")
+        dir.create("coords")
     }
     setwd(paths)
     if (length(which("depth1" == dir())) > 0) {
@@ -282,8 +282,17 @@ function (paths)
             gene_symbol <- c()
             for (i in 1:length(gene_AllSymbol)) {
                 if (gene_AllSymbol[i] == "graphics") {
-                  gene_symbol <- c(gene_symbol, gene_AllSymbol[i + 
-                    1])
+                  if (substr(gene_AllSymbol[i + 1], (nchar(gene_AllSymbol[i + 
+                    1]) - 2), nchar(gene_AllSymbol[i + 1])) == 
+                    "...") {
+                    gene_symbol <- c(gene_symbol, substr(gene_AllSymbol[i + 
+                      1], 1, (nchar(gene_AllSymbol[i + 1]) - 
+                      3)))
+                  }
+                  else {
+                    gene_symbol <- c(gene_symbol, gene_AllSymbol[i + 
+                      1])
+                  }
                 }
             }
             geneAndSymbol <- c()
@@ -327,10 +336,11 @@ function (paths)
             coords <- c()
             coords_nodes <- gene_node[, 1]
             for (i in 1:dim(coord)[1]) {
+                m <- substr(pathway, 1, 8)
                 coords <- rbind(coords, cbind(coords_nodes[i], 
                   coord[i, 1], coord[i, 2]))
             }
-            k <- sub(" ", "", paste(paths, "/coords1"))
+            k <- sub(" ", "", paste(paths, "/coords"))
             setwd(k)
             write.table(coords, name, quote = T, sep = "\t", 
                 col.names = FALSE, append = TRUE, row.names = FALSE)

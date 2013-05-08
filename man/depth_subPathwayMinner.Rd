@@ -2,10 +2,10 @@
 \alias{depth_subPathwayMinner}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-According to the depth traverse datas to mine subpathway.
+According to the depth traverse datas to mine sub-pathway.
 }
 \description{
-Function to mine subpathway.
+Function to mine sub-pathway.
 }
 \usage{
 depth_subPathwayMinner(paths, num, name, interestOfGene, p_value)
@@ -22,7 +22,7 @@ The whole nodes number of the species.
 The species name.
 }
   \item{interestOfGene}{
-The genes that users input to mine subpathway.
+The genes that users input to mine sub-pathway.
 }
   \item{p_value}{
 The significance of the p_value.
@@ -43,11 +43,14 @@ Xiaomeng Ni
 ##-- ==>  Define data, use random,
 ##--	or do  help(data=index)  for the standard data sets.
 
-#--depth_subPathwayMinner(paths,num,name,interestOfGene,0.01)
+#--depth_subPathwayMinner(paths,39114,name,interestOfGene,0.01)
 
 ## The function is currently defined as
 function (paths, num, name, interestOfGene, p_value) 
 {
+    library(graph)
+    data(pathwayName, envir = environment())
+    pathwayName <- pathwayName
     if (nchar(name) < 5) {
         k <- nchar(name)
         m <- sub(" ", "", paste(paths, "/fpathway"))
@@ -62,7 +65,7 @@ function (paths, num, name, interestOfGene, p_value)
     if (length(which("temp" == dir())) > 0) {
         n <- sub(" ", "", paste(paths, "/temp"))
         setwd(n)
-        if (length(dir()) > 0) {
+        if (length(dir()) > 2) {
             n <- sub(" ", "", paste(paths, "/temp/resulttemp"))
             setwd(n)
             unlink(dir())
@@ -103,9 +106,6 @@ function (paths, num, name, interestOfGene, p_value)
     for (z in 1:dim(pathwayN)[1]) {
         pathway <- pathwayN[z, 1]
         setwd(paths)
-        a <- "pathwayName.txt"
-        pathwayName <- read.table(a, sep = "\t", quote = "", 
-            header = FALSE)
         n <- sub(" ", "", paste(paths, "/depth"))
         setwd(n)
         pathway <- sub(" ", ".", paste(pathway, "txt"))
@@ -192,7 +192,7 @@ function (paths, num, name, interestOfGene, p_value)
         if (length(rule2_data) == 0) 
             next
         if (rule2_data[[1]][1, 6] == "NaN") {
-            print("P_value is too small to calculate.")
+            print("P_value is too small to calculate")
         }
         for (p in 1:length(cl)) {
             if (dim(rule2_data[[p]])[1] > 1) {
@@ -317,28 +317,58 @@ function (paths, num, name, interestOfGene, p_value)
             aL <- aL + 1
         }
         arrInG <- a2
+        n1 <- sub(" ", "", paste(paths, "/networkData"))
+        setwd(n1)
+        netData <- read.table(name1, header = FALSE, sep = "\t", 
+            na.strings = "NA", stringsAsFactors = FALSE)
         n1 <- sub(" ", "", paste(paths, "/depth1"))
         setwd(n1)
         depth1 <- read.table(name1, header = FALSE, sep = "\t", 
             na.strings = "NA", stringsAsFactors = FALSE)
         for (p in 1:length(ruledata)) {
             for (i in 1:dim(ruledata[[p]])[1]) {
+                subData <- c()
                 for (j in ruledata[[p]][i, 1]:(as.numeric(ruledata[[p]][i, 
                   2]) - 1)) {
-                  k <- 0
-                  col <- c()
-                  k = which(depth1[1, ] == depth1[j, (2 * mark2[p] - 
-                    1)])
-                  for (l in (j + 1):ruledata[[p]][i, 2]) {
-                    r <- 0
-                    r = which(depth1[, k] == depth1[l, (2 * mark2[p] - 
-                      1)])
-                    col <- c(col, depth1[r, (k + 1)])
+                  for (t in (j + 1):as.numeric(ruledata[[p]][i, 
+                    2])) {
+                    subData <- rbind(subData, cbind(depth1[j, 
+                      (2 * mark2[p] - 1)], depth1[t, (2 * mark2[p] - 
+                      1)]))
                   }
-                  if (min(col) > 1) {
+                }
+                data <- c()
+                for (j in 1:dim(subData)[1]) {
+                  for (t in 1:dim(netData)[1]) {
+                    if (subData[j, 1] == netData[t, 1] && subData[j, 
+                      2] == netData[t, 2] || subData[j, 1] == 
+                      netData[t, 2] && subData[j, 2] == netData[t, 
+                      1]) {
+                      data <- rbind(data, subData[j, ])
+                    }
+                  }
+                }
+                nodes <- unique(c(data[, 1], data[, 2]))
+                k <- as.numeric(ruledata[[p]][i, 2]) - as.numeric(ruledata[[p]][i, 
+                  1]) + 1
+                if (length(nodes) == k) {
+                  nodes <- as.character(nodes)
+                  g1 <- new("graphNEL", nodes = nodes, edgemode = "undirected")
+                  for (l in 1:dim(data)[1]) {
+                    if (!isAdjacent(g1, as.character(data[l, 
+                      1]), as.character(data[l, 2]))) {
+                      g2 <- addEdge(as.character(data[l, 1]), 
+                        as.character(data[l, 2]), g1, 1)
+                      g1 <- g2
+                    }
+                  }
+                  keggPathway <- g1
+                  if (length(connComp(g1)) > 1) {
                     ruledata[[p]][i, ] = 0
-                    break
                   }
+                }
+                else {
+                  ruledata[[p]][i, ] = 0
                 }
             }
         }

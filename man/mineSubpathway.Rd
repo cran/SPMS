@@ -2,10 +2,10 @@
 \alias{mineSubpathway}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-Use this funtion to mine subpathway.
+Use this funtion to mine sub-pathway.
 }
 \description{
-Function to mine subpathway.
+Function to mine sub-pathway.
 }
 \usage{
 mineSubpathway(paths, interestOfGene, dORb, name, inG, p_value, broad_path)
@@ -25,7 +25,7 @@ The parameter is convenient to users to choose to run depth or broad funtions.
 The species name or pathway name.
 }
   \item{inG}{
-According to the interest genes number(inG) in subpathway to limit the result.
+According to the interest genes number(inG) in sub-pathway to limit the result.
 }
   \item{p_value}{
 The significance of the p_value.
@@ -49,7 +49,7 @@ Xiaomeng Ni
 ##-- ==>  Define data, use random,
 ##--	or do  help(data=index)  for the standard data sets.
 
-#--mineSubpathway(paths,interestOfGene, "depth","hsa",3,0.01,1)
+#--mineSubpathway(paths, interestOfGene,"depth","hsa",3,0.01,1)
 
 ## The function is currently defined as
 function (paths, interestOfGene, dORb, name, inG, p_value, broad_path) 

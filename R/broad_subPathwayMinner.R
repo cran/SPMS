@@ -13,7 +13,7 @@ function(paths,num,name,interestOfGene,p_value,broad_path){
      if(length(which("temp"==dir()))>0){
 		 n<-sub(" ","",paste(paths,"/temp")) 
 	     setwd(n)
-		 if(length(dir())>0){
+		 if(length(dir())>2){
 		     n<-sub(" ","",paste(paths,"/temp/resulttemp")) 
 	         setwd(n)
 			 unlink(dir())
@@ -51,9 +51,11 @@ function(paths,num,name,interestOfGene,p_value,broad_path){
      for(z in 1:dim(pathwayN)[1]){
          pathway<-pathwayN[z,1]
 	     setwd(paths)
-	     a<-"pathwayName.txt"
-	     pathwayName<-read.table(a,sep="\t",quote="",header=FALSE)
-         n<-sub(" ","",paste(paths,"/broad")) 
+	     
+		 data(pathwayName,envir=environment())
+	     pathwayName<-pathwayName
+		 
+		 n<-sub(" ","",paste(paths,"/broad")) 
 	     setwd(n)
 	     pathway<-sub(" ",".",paste(pathway,"txt"))
 	     name1<-pathway

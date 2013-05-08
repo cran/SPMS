@@ -5,7 +5,8 @@
 To show the text result in R-gui.
 }
 \description{
-Function to show the text result in R-gui.
+The function to show the text results in R-gui.A file of .txt format of all the sub-pathway identification text results is saved in the txtResult folder under the "paths" which is set by the function of
+setPath() 
 }
 \usage{
 txtResultShowing(paths, name)

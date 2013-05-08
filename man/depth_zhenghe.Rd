@@ -19,7 +19,7 @@ The paths is fixed, which is set by setPath function at first.
 The parameter is convenient to users to choose to run depth or broad funtions.
 }
   \item{inG}{
-According to the interest genes number(inG) in subpathway to limit the result.
+According to the interest genes number(inG) in sub-pathway to limit the result.
 }
 }
 \value{
@@ -211,7 +211,7 @@ function (paths, dORb, inG)
                 for (j in 1:length(mark2)) {
                   k <- 0
                   k = which(mark1 == mark2[j])
-                  if (length(k)/length(mark1) > 0.5) {
+                  if (length(k)/length(mark1) >= 0.5) {
                     result[i, ] = 0
                     result1[i, ] = 0
                     break
@@ -254,7 +254,8 @@ function (paths, dORb, inG)
         unlink("txtResult.txt")
         k <- c()
         gResult1 <- data.frame()
-        k <- c(k, grep("hsa0", gR))
+        nn <- paste0(substr(gR[1], 1, (nchar(gR[1]) - 4)))
+        k <- c(k, grep(nn, gR))
         if (length(k) > 2) {
             for (i in 1:(length(k)/2 - 1)) {
                 l <- 1

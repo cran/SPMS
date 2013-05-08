@@ -2,10 +2,14 @@
 \alias{getAllSubpathway}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-To get all subpathways' subgraphs.
+To get all sub-pathways' subgraphs.
 }
 \description{
-Run this function to get all subpathways' subgraphs.
+Run this function to get all sub-pathways' subgraphs.
+
+Function to save all of graph results of sub-pathway in the pdf file. Files of .pdf format of all sub-pathway graph results are saved in the "picture" folder under the "paths" which is set by the function of
+setPath() 
+
 }
 \usage{
 getAllSubpathway(paths, dORb)

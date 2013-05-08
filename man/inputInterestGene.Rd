@@ -5,7 +5,7 @@
 Input interestGene.
 }
 \description{
-Users can input to interest genes according to the path.
+Users can input to interest genes according to the path. The genes input by user can be perpared in one file and each line represents one gene. The gene IDs identified  by this function are the same as the "graphics name" in xml files and they may be the gene symbol ID or ORF nameID ,etc. 
 }
 \usage{
 inputInterestGene()
@@ -27,7 +27,7 @@ Xiaomeng Ni
 #--interestOfGene<-inputInterestGene()
 
 ## The function is currently defined as
-inputInterestGene<-function () 
+function () 
 {
     interestOfGene <- read.table(file.choose(), sep = ",", header = FALSE)
     return(interestOfGene)

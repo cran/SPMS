@@ -2,10 +2,10 @@
 \alias{broad_subPathwayMinner}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-According to the broad traverse datas to mine subpathway.
+According to the broad traverse datas to mine su-bpathway.
 }
 \description{
-Function to mine subpathway.
+Function to mine sub-pathway.
 }
 \usage{
 broad_subPathwayMinner(paths, num, name, interestOfGene, p_value, broad_path)
@@ -22,7 +22,7 @@ The whole node number of the species.
 The species name.
 }
   \item{interestOfGene}{
-The genes that users input to mine subpathway.
+The genes that users input to mine sub-pathway.
 }
   \item{p_value}{
 The significance of the p_value.
@@ -46,7 +46,7 @@ Xiaomeng Ni
 ##-- ==>  Define data, use random,
 ##--	or do  help(data=index)  for the standard data sets.
 
-#--broad_subPathwayMinner(paths,num,name,interestOfGene,0.01,1)
+#--broad_subPathwayMinner(paths,39114,name,interestOfGene,0.01,1)
 
 ## The function is currently defined as
 function (paths, num, name, interestOfGene, p_value, broad_path) 
@@ -65,7 +65,7 @@ function (paths, num, name, interestOfGene, p_value, broad_path)
     if (length(which("temp" == dir())) > 0) {
         n <- sub(" ", "", paste(paths, "/temp"))
         setwd(n)
-        if (length(dir()) > 0) {
+        if (length(dir()) > 2) {
             n <- sub(" ", "", paste(paths, "/temp/resulttemp"))
             setwd(n)
             unlink(dir())
@@ -106,9 +106,8 @@ function (paths, num, name, interestOfGene, p_value, broad_path)
     for (z in 1:dim(pathwayN)[1]) {
         pathway <- pathwayN[z, 1]
         setwd(paths)
-        a <- "pathwayName.txt"
-        pathwayName <- read.table(a, sep = "\t", quote = "", 
-            header = FALSE)
+        data(pathwayName, envir = environment())
+        pathwayName <- pathwayName
         n <- sub(" ", "", paste(paths, "/broad"))
         setwd(n)
         pathway <- sub(" ", ".", paste(pathway, "txt"))
