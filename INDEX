@@ -1,0 +1,19 @@
+broad_OnePictureShowing		Show the sub-pathway picture by broad traversal in R-gui
+broad_subPathwayGraph		Generate the sub-pathway results picture in paths
+broad_subPathwayMinner		Generate the text results of sub-pathway minner by broad traversal
+broad_zhenghe				To redundancy the primary text results of sub-pathway minner by broad traversal
+depth_OnePictureShowing		Show the sub-pathway picture by depth traversal in R-gui
+depth_subPathwayGraph		Generate the sub-pathway results picture in paths
+depth_subPathwayMinner		Generate the text results of sub-pathway minner by depth traversal
+depth_zhenghe				To redundancy the primary text results of sub-pathway minner by depth traversal
+ErgodicPathShowing			To show the traversal path of sub-pathway
+fPathway				Generate the name of pathway
+getAllSubpathway			Generate all sub-pathways and store in paths library
+getData				Deal with xml format and obtain useful information
+getNodesNum				Calculate the nodes number of one sprcies
+inputInterestGene			Input the genes of interest
+mineSubpathway			Generate the text result of sub-pathway minner
+networkShowing_geneSymbol		The connected diagram with gene_symbol attributes
+networkShowing_hsa			The connected diagram with hsa id attributes
+setPath				Set the path
+tetResultShowing			Show the text results in r-gui
